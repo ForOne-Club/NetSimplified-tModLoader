@@ -14,14 +14,21 @@ namespace NetSimplified
         /// 创建一个 <see cref="AggregateModule"/> 包实例
         /// </summary>
         /// <param name="modules">所有要发的 <see cref="NetModule"/> 包</param>
-        public AggregateModule(List<NetModule> modules) {
-            Modules = modules;
+        public static AggregateModule Get(List<NetModule> modules) {
+            var module = NetModuleLoader.Get<AggregateModule>();
+            module.Modules = modules;
+            return module;
         }
 
         /// <inheritdoc/>
         public override void Read(BinaryReader r) {
-            foreach (var module in Modules) {
+            int count = r.ReadInt32();
+            Modules = new();
+            for (int i = 0; i < count; i++) {
+                int type = r.ReadInt32();
+                var module = NetModuleLoader.Get(type);
                 module.Read(r);
+                Modules.Add(module);
             }
         }
 
@@ -34,7 +41,9 @@ namespace NetSimplified
 
         /// <inheritdoc/>
         public override void Send(ModPacket p) {
+            p.Write(Modules.Count);
             foreach (var module in Modules) {
+                p.Write(module.Type);
                 module.Send(p);
             }
         }
