@@ -9,10 +9,10 @@ namespace NetSimplified
 {
     /// <summary>
     /// 以一个 <see cref="ModPacket"/> 包的形式发送多个 <see cref="NetModule"/> 包, 能有效避免分散性地多次发包。
-    /// <br>与普通包一样, 发包时调用 <see cref="NetModule.Send(int, int, bool)"/> 即可</br>
+    /// <br>与普通包一样, 发包时调用 <see cref="Send(Mod, int, int, bool)"/> 即可</br>
     /// <br>正常情况下, 其 <see cref="NetModule.Type"/> 应为0, 获取时应调用 <see cref="Get(List{NetModule})"/> 而不是 <see cref="NetModuleLoader.Get{T}"/>, 否则会获取到 <see langword="null"/> 值</br>
     /// </summary>
-    public class AggregateModule : NetModule
+    public sealed class AggregateModule : NetModule
     {
         /// <inheritdoc/>
         public override void SetStaticDefaults() {
