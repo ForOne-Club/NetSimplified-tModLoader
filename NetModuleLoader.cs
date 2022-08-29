@@ -9,7 +9,9 @@ namespace NetSimplified
 	/// </summary>
 	public class NetModuleLoader
 	{
-		private static readonly List<NetModule> modules = new();
+		private static readonly List<NetModule> modules = new() {
+			new AggregateModule()
+        };
 
 		internal static void Register(NetModule netModule) {
 			if (modules.Contains(netModule)) {

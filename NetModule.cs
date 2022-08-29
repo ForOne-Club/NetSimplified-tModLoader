@@ -43,7 +43,6 @@ namespace NetSimplified
             if (PreSend(toClient, ignoreClient)) {
                 if (Main.netMode != NetmodeID.SinglePlayer) {
                     ModPacket mp = Mod.GetPacket();
-                    //serializer.Serialize(mp.BaseStream, this);
                     mp.Write(Type);
                     Send(mp);
                     mp.Send(toClient, ignoreClient);
