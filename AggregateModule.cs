@@ -63,8 +63,9 @@ namespace NetSimplified
         /// <summary>
         /// 请不要对 <see cref="AggregateModule"/> 使用这个, 去用 <see cref="Send(Mod, int, int, bool)"/>
         /// </summary>
-		[Obsolete("使用 Send(Mod mod, int toClient = -1, int ignoreClient = -1, bool runLocally = true)", true)]
-        public new void Send(int toClient = -1, int ignoreClient = -1, bool runLocally = true) { }
+        [Obsolete("使用 Send(Mod mod, int toClient = -1, int ignoreClient = -1, bool runLocally = true)", true)]
+        public new void Send(int toClient = -1, int ignoreClient = -1, bool runLocally = true) {
+        }
 
         /// <summary>
         /// 通过 <see cref="ModPacket"/> 发包
@@ -81,6 +82,7 @@ namespace NetSimplified
                     Send(mp);
                     mp.Send(toClient, ignoreClient);
                 }
+
                 if (runLocally) {
                     Receive();
                 }

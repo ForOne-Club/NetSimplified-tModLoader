@@ -7,13 +7,20 @@
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <PackageVersion>1.1.0</PackageVersion>
+    <Title>Net Simplified</Title>
+    <Authors>Cyrilly</Authors>
+    <PackageLicenseUrl>https://github.com/Cyrillya/NetSimplified-tModLoader/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Cyrillya/NetSimplified-tModLoader</RepositoryUrl>
+    <RepositoryType>DLL Library</RepositoryType>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FNA">
-      <HintPath>FNA.dll</HintPath>
+      <HintPath>Libraries\FNA.dll</HintPath>
     </Reference>
     <Reference Include="tModLoader">
-      <HintPath>tModLoader.dll</HintPath>
+      <HintPath>Libraries\tModLoader.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

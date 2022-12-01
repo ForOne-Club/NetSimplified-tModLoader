@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
+using NetSimplified.Syncing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,11 +12,13 @@ namespace NetSimplified
     public abstract class NetModule : ModType
     {
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+
         public sealed override void SetupContent() => SetStaticDefaults();
 
         protected sealed override void Register() {
             NetModuleLoader.Register(this);
         }
+
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
         /// <summary>包的发送者</summary>
@@ -39,14 +39,16 @@ namespace NetSimplified
         /// <param name="toClient">如果不是 -1, 则包<b>只会</b>发送给对应的客户端</param>
         /// <param name="ignoreClient">如果不是 -1, 则包<b>不会</b>发送给对应的客户端</param>
         /// <param name="runLocally">如果为 <see langword="true"/> 则在发包时会调用 <see cref="Receive()"/> 方法</param>
-        public void Send(int toClient = -1, int ignoreClient = -1, bool runLocally = true) {
+        public void Send(int toClient = -1, int ignoreClient = -1, bool runLocally = false) {
             if (PreSend(toClient, ignoreClient)) {
                 if (Main.netMode != NetmodeID.SinglePlayer) {
                     ModPacket mp = Mod.GetPacket();
                     mp.Write(Type);
+                    AutoSyncHandler.HandleAutoSend(this, mp);
                     Send(mp);
                     mp.Send(toClient, ignoreClient);
                 }
+
                 if (runLocally) {
                     Receive();
                 }
@@ -71,6 +73,7 @@ namespace NetSimplified
         public static void ReceiveModule(BinaryReader reader, int whoAmI) {
             NetModule module = NetModuleLoader.Get(reader.ReadInt32());
             module.Sender = whoAmI;
+            AutoSyncHandler.HandleAutoRead(module, reader);
             module.Read(reader);
             module.Receive();
         }
