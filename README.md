@@ -44,7 +44,7 @@
 更好的体验里的包结构: `Send`, `Read`, `Receive` 肯定必不可少的。每个包类都有一个静态名为 `Get` 的方法，传入参数为这个包应该有的数据，使用 `NetModuleLoader.Get<T>()` 获取到包实例，然后将数据逐一赋值
 
 这里是一个例子
-```
+```CSharp
 // 第一张创建包的方案，逐一传入
 public static ItemUsePacket Get(int whoAmI, float itemRotation, int direction, short itemAnimation)
 {
@@ -74,7 +74,7 @@ public static ItemUsePacket Get(Player player) => Get(player.whoAmI, player.item
 就是一次性把好几个包一起发出去，避免延迟上多包不同步导致的问题，非常的好用  
 ### 例子
 依然是来自更好的体验，[文件在这](https://gitee.com/MyGoold/improve-game/blob/master/Common/Packets/NetAutofisher/OpenFisherPackets.cs#L46)
-```
+```CSharp
 // 获取包含了多个 NetModule 包的 AggregateModule 包实例
 var packets = AggregateModule.Get(
     // 传参
