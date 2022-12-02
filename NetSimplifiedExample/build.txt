@@ -1,3 +1,5 @@
 displayName = Net Simplified Example
 author = Cyrilly
-version = 0.1
+version = 1.0
+includeSource = true
+dllReferences = NetSimplified

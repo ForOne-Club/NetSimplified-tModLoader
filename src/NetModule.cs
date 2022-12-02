@@ -31,7 +31,8 @@ namespace NetSimplified
         /// 使用这个函数来自行发送字段
         /// </summary>
         /// <param name="p">用于发包的 <see cref="ModPacket"/> 实例</param>
-        public abstract void Send(ModPacket p);
+        public virtual void Send(ModPacket p) {
+        }
 
         /// <summary>
         /// 通过 <see cref="ModPacket"/> 发包
@@ -59,7 +60,8 @@ namespace NetSimplified
         /// 使用这个函数来自行读取字段
         /// </summary>
         /// <param name="r">用于读取的 <see cref="BinaryReader"/> 实例</param>
-        public abstract void Read(BinaryReader r);
+        public virtual void Read(BinaryReader r) {
+        }
 
         /// <summary>
         /// 使用这个函数来进行接收后的操作 (与 <see cref="Read(BinaryReader)"/> 分开以适配 runLocally)
@@ -71,7 +73,7 @@ namespace NetSimplified
 
         /// <summary>接收来自你的Mod的发包, 请在 <see cref="Mod.HandlePacket(BinaryReader, int)"/> 调用</summary>
         public static void ReceiveModule(BinaryReader reader, int whoAmI) {
-            NetModule module = NetModuleLoader.Get(reader.ReadInt32());
+            var module = NetModuleLoader.Get(reader.ReadInt32());
             module.Sender = whoAmI;
             AutoSyncHandler.HandleAutoRead(module, reader);
             module.Read(reader);

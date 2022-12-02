@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>NetSimplified</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
@@ -27,5 +26,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="NetSimplifiedExample\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FNA">
+      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\Libraries\FNA\1.0.0\FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="tModLoader">
+      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\tModLoader.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
