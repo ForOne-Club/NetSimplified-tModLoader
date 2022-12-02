@@ -1,0 +1,3 @@
+displayName = Net Simplified Example
+author = Cyrilly
+version = 0.1
