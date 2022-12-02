@@ -38,6 +38,26 @@ internal static class AutoSyncHandler
                 bw.Write((long) fieldInfo.GetValue(netModule)!);
             }
 
+            if (fieldInfo.FieldType == typeof(ushort)) {
+                bw.Write((ushort) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(uint)) {
+                bw.Write((uint) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(ulong)) {
+                bw.Write((ulong) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(float)) {
+                bw.Write((float) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(double)) {
+                bw.Write((double) fieldInfo.GetValue(netModule)!);
+            }
+
             if (fieldInfo.FieldType == typeof(string)) {
                 bw.Write((string) fieldInfo.GetValue(netModule)!);
             }
@@ -116,6 +136,26 @@ internal static class AutoSyncHandler
 
             if (fieldInfo.FieldType == typeof(long)) {
                 fieldInfo.SetValue(netModule, r.ReadInt64());
+            }
+
+            if (fieldInfo.FieldType == typeof(ushort)) {
+                fieldInfo.SetValue(netModule, r.ReadUInt16());
+            }
+
+            if (fieldInfo.FieldType == typeof(uint)) {
+                fieldInfo.SetValue(netModule, r.ReadUInt32());
+            }
+
+            if (fieldInfo.FieldType == typeof(ulong)) {
+                fieldInfo.SetValue(netModule, r.ReadUInt64());
+            }
+
+            if (fieldInfo.FieldType == typeof(float)) {
+                fieldInfo.SetValue(netModule, r.ReadSingle());
+            }
+
+            if (fieldInfo.FieldType == typeof(double)) {
+                fieldInfo.SetValue(netModule, r.ReadDouble());
             }
 
             if (fieldInfo.FieldType == typeof(string)) {
