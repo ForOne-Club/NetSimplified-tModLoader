@@ -17,8 +17,8 @@ public class InventoryPacket : NetModule
     // 注意: 这种情况下类不应该使用 AutoSync 特性，否则还是会全部变量自动传输
 
     private byte _whoAmI;
-    private Item _holdItem;
-    [ItemSync(syncStack: false)] private Item[] _items;
+    private Item _holdItem; // 这个物品会传输 stack 变量，但不会传输 favorite 变量。这是物品传输的默认行为
+    [ItemSync(syncStack: false)] private Item[] _items; // 这一数组的物品不会传输 stack 和 favorite 变量
 
     public static InventoryPacket Get(int plr) {
         var module = NetModuleLoader.Get<InventoryPacket>();
