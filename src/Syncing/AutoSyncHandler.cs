@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -9,15 +11,21 @@ namespace NetSimplified.Syncing;
 
 internal static class AutoSyncHandler
 {
-    internal static void HandleAutoSend(NetModule netModule, BinaryWriter bw) {
-        var fields = netModule.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+    /// <summary>
+    /// 自动传输支持的数据类型
+    /// </summary>
+    public static readonly Type[] SupportedTypes = {
+        typeof(byte), typeof(bool), typeof(short), typeof(int), typeof(long), typeof(ushort), typeof(uint),
+        typeof(ulong), typeof(float), typeof(double), typeof(char), typeof(string), typeof(Vector2), typeof(Color),
+        typeof(Point), typeof(Point16), typeof(Item), typeof(Item[])
+    };
 
-        var isClassAutoSync = Attribute.IsDefined(netModule.GetType(), typeof(AutoSyncAttribute));
+    internal static void HandleAutoSend(NetModule netModule, BinaryWriter bw) {
+        if (!NetModuleLoader.FieldInfos.TryGetValue(netModule.Type, out var fields)) {
+            return;
+        }
 
         foreach (var fieldInfo in fields) {
-            if (!isClassAutoSync && !Attribute.IsDefined(fieldInfo, typeof(AutoSyncAttribute))) continue;
-
             if (fieldInfo.FieldType == typeof(byte)) {
                 bw.Write((byte) fieldInfo.GetValue(netModule)!);
             }
@@ -56,6 +64,10 @@ internal static class AutoSyncHandler
 
             if (fieldInfo.FieldType == typeof(double)) {
                 bw.Write((double) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(char)) {
+                bw.Write((char) fieldInfo.GetValue(netModule)!);
             }
 
             if (fieldInfo.FieldType == typeof(string)) {
@@ -110,14 +122,11 @@ internal static class AutoSyncHandler
     }
 
     internal static void HandleAutoRead(NetModule netModule, BinaryReader r) {
-        var fields = netModule.GetType()
-            .GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-
-        var isClassAutoSync = Attribute.IsDefined(netModule.GetType(), typeof(AutoSyncAttribute));
+        if (!NetModuleLoader.FieldInfos.TryGetValue(netModule.Type, out var fields)) {
+            return;
+        }
 
         foreach (var fieldInfo in fields) {
-            if (!isClassAutoSync && !Attribute.IsDefined(fieldInfo, typeof(AutoSyncAttribute))) continue;
-
             if (fieldInfo.FieldType == typeof(byte)) {
                 fieldInfo.SetValue(netModule, r.ReadByte());
             }
@@ -156,6 +165,10 @@ internal static class AutoSyncHandler
 
             if (fieldInfo.FieldType == typeof(double)) {
                 fieldInfo.SetValue(netModule, r.ReadDouble());
+            }
+
+            if (fieldInfo.FieldType == typeof(char)) {
+                fieldInfo.SetValue(netModule, r.ReadChar());
             }
 
             if (fieldInfo.FieldType == typeof(string)) {

@@ -9,7 +9,7 @@
 在 `build.txt` 添加: `dllReferences = NetSimplified`  
 最后在VS添加引用即可
 
-要是你还不懂，[更好的体验](https://gitee.com/MyGoold/improve-game)欢迎您
+要是你还不懂，建议查看[配套示例](NetSimplifiedExample)
 
 *p.s. `dll` 文件为类库，即本体，`xml` 文件为注释*
 
@@ -18,15 +18,23 @@
 关于这个库的基本用法的演示，可以看[此示例模组](NetSimplifiedExample)，以下是简要内容:
 
 - `build.txt` 中添加了: `dllReferences = NetSimplified`
-- `Mod` [主类](NetSimplifiedExample/NetSimplifiedExample.cs)中在 `HandlePacket` 调用 `NetModule.ReceiveModule`
-- 一个 `NetModule` 类的[例子](NetSimplifiedExample/Packets/InventoryPacket.cs)
-- 一个发包的[例子](NetSimplifiedExample/Items/ExamplePacketSender.cs)
+
+- `Mod` [主类](NetSimplifiedExample/NetSimplifiedExample.cs)中:
+  - 在 `Load` 调用 `AddContent<NetModuleLoader>()`
+  
+  - 在 `HandlePacket` 调用 `NetModule.ReceiveModule`
+  
+- 三个 `NetModule` 类的[例子](NetSimplifiedExample/Packets)
+
+- 一个发单独包的[例子](NetSimplifiedExample/Items/ExamplePacketSender.cs)
+
+- 一个发 AggregateModule 合并包的[例子](NetSimplifiedExample/Items/ExampleAggregateSender.cs)
 
 ## AutoSync 自动传输特性
 
 此库提供了一个自动通过 `Write` 与 `Read` 系列方法传输数据的功能，可以通过对类或字段标记 `[AutoSync]` 特性以使其自动同步，[这个例子](NetSimplifiedExample/Packets/InventoryPacket.cs)可以展示了它的使用方法。
 
-目前，自动传输支持的变量为: ` byte, bool, short, int, long, ushort, uint, ulong, float, double, string, Vector2, Color, Point, Point16, Item, Item[]`
+目前，自动传输支持的变量为: ` byte, bool, short, int, long, ushort, uint, ulong, float, double, char, string, Vector2, Color, Point, Point16, Item, Item[]`
 
 **注意: 对于不支持的变量，无法使用自动传输，你仍需要自行编写传输代码**
 
@@ -110,39 +118,15 @@ public class ExamplePacket : NetModule {
 
 就是一次性把好几个包一起发出去，避免延迟上多包不同步导致的问题，非常的好用  
 ### 例子
-来自更好的体验，[文件在这](https://gitee.com/MyGoold/improve-game/blob/master/Common/Packets/NetAutofisher/OpenFisherPackets.cs#L46)
+来自配套的示例Mod，[文件在这](NetSimplifiedExample/Items/ExampleAggregateSender.cs)
 ```CSharp
 // 获取包含了多个 NetModule 包的 AggregateModule 包实例
-var packets = AggregateModule.Get(
-    // 传参
-    new() {
-        // 第一个包
-        FisherAllFiltersPacket.Get(
-            position,
-            autofisher.CatchCrates,
-            autofisher.CatchAccessories,
-            autofisher.CatchTools,
-            autofisher.CatchWhiteRarityCatches,
-            autofisher.CatchNormalCatches
-        ), // 留意逗号
-        // 第二个包
-        LocatePointPacket.Get(
-            position,
-            autofisher.locatePoint
-        ), // 留意逗号
-        // 第二个包
-        ItemsSyncAllPacket.Get(
-            position,
-            true,
-            autofisher.fishingPole,
-            autofisher.bait,
-            autofisher.accessory,
-            autofisher.fish
-        ) // 这里最后一个没有逗号了
-    }
-);
-// 发包
-packets.Send(Mod, -1, -1);
+AggregateModule.Get(new List<NetModule> {
+    // 第一个 NetModule 包
+    SystemTimePacket.Get(DateTime.Now.ToString(CultureInfo.InvariantCulture)), // 注意逗号
+    // 第二个 NetModule 包
+    RandomStringPacket.Get()
+}).Send(toClient: player.whoAmI); // 发送
 ```
 
 ***

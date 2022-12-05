@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using NetSimplified.Syncing;
 using Terraria;
 using Terraria.ID;
@@ -17,6 +20,16 @@ namespace NetSimplified
 
         protected sealed override void Register() {
             NetModuleLoader.Register(this);
+        }
+
+        protected sealed override void ValidateType() {
+            var fields = GetType().GetFields(BindingFlags.Instance | BindingFlags.Static |
+                                             BindingFlags.NonPublic | BindingFlags.Public);
+            if (fields.Any(f =>
+                    !AutoSyncHandler.SupportedTypes.Contains(f.FieldType) &&
+                    Attribute.IsDefined(f, typeof(AutoSyncAttribute)))) {
+                throw new NotSupportedException("字段不支持自动传输");
+            }
         }
 
 #pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using NetSimplified;
 using NetSimplifiedExample.Packets;
 using Terraria;
@@ -7,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace NetSimplifiedExample.Items;
 
-public class ExamplePacketSender : ModItem
+/// <summary>
+/// 这个例子演示了如何使用 AggregateModule 合并发送两个包
+/// </summary>
+public class ExampleAggregateSender : ModItem
 {
     public override void SetStaticDefaults() {
         // DisplayName.SetDefault("ExamplePacketSender"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
@@ -31,7 +36,13 @@ public class ExamplePacketSender : ModItem
 
     public override bool CanUseItem(Player player) {
         if (Main.netMode is NetmodeID.Server) {
-            InventoryPacket.Get(player.whoAmI).Send(toClient: player.whoAmI);
+            // 获取包含了多个 NetModule 包的 AggregateModule 包实例
+            AggregateModule.Get(new List<NetModule> {
+                // 第一个 NetModule 包
+                SystemTimePacket.Get(DateTime.Now.ToString(CultureInfo.InvariantCulture)), // 注意逗号
+                // 第二个 NetModule 包
+                RandomStringPacket.Get()
+            }).Send(toClient: player.whoAmI); // 发送
         }
 
         return base.CanUseItem(player);
