@@ -3,7 +3,7 @@
 不需要Mod强引用(因为根本没有Mod)
 
 [最新版本在这里](https://github.com/Crapsky233/NetSimplified-tModLoader/releases/latest)
-***
+
 ## 添加到你的Mod中
 在Mod根目录创建一个 `lib/` 文件夹，将 `dll` 与 `xml` 文件放入（在[Releases](https://github.com/Crapsky233/NetSimplified-tModLoader/releases/latest)界面下载最新版的这两个文件）  
 在 `build.txt` 添加: `dllReferences = NetSimplified`  
@@ -13,21 +13,25 @@
 
 *p.s. `dll` 文件为类库，即本体，`xml` 文件为注释*
 
+### 建立框架
+对于你的模组，你只需要编写两处激活性质的代码即可正常使用此库的全部内容:
+
+在 `Mod` [主类](NetSimplifiedExample/NetSimplifiedExample.cs)中:
+- 在 `Load` 调用 `AddContent<NetModuleLoader>()`，以激活 `AggregateModule` 和自动传输功能
+- 在 `HandlePacket` 调用 `NetModule.ReceiveModule`，以让库接收并处理二进制数据包
+
+你可以参考[示例模组](NetSimplifiedExample/NetSimplifiedExample.cs)中的写法
+
 ## 配套示例模组
 
 关于这个库的基本用法的演示，可以看[此示例模组](NetSimplifiedExample)，以下是简要内容:
 
 - `build.txt` 中添加了: `dllReferences = NetSimplified`
-
 - `Mod` [主类](NetSimplifiedExample/NetSimplifiedExample.cs)中:
   - 在 `Load` 调用 `AddContent<NetModuleLoader>()`
-  
   - 在 `HandlePacket` 调用 `NetModule.ReceiveModule`
-  
 - 三个 `NetModule` 类的[例子](NetSimplifiedExample/Packets)
-
 - 一个发单独包的[例子](NetSimplifiedExample/Items/ExamplePacketSender.cs)
-
 - 一个发 AggregateModule 合并包的[例子](NetSimplifiedExample/Items/ExampleAggregateSender.cs)
 
 ## AutoSync 自动传输特性
