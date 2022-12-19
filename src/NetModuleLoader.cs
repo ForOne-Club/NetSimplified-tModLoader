@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NetSimplified.Syncing;
+using Terraria;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace NetSimplified;
 
@@ -13,8 +15,17 @@ namespace NetSimplified;
 /// </summary>
 public class NetModuleLoader : ModSystem
 {
-    private static List<NetModule> _modules = new();
+    /// <summary>
+    /// 用于记录各 NetModule 的传输量
+    /// </summary>
+    public static NetModuleDiagnostics NetModuleDiagnosticsUI { get; private set; }
     internal static Dictionary<int, FieldInfo[]> FieldInfos = new();
+    private static List<NetModule> _modules = new();
+
+    /// <inheritdoc />
+    public override void PostSetupContent() {
+        NetModuleDiagnosticsUI = Main.dedServ ? null : new NetModuleDiagnostics(_modules);
+    }
 
     /// <inheritdoc />
     public override void Load() {
@@ -25,6 +36,7 @@ public class NetModuleLoader : ModSystem
     public override void Unload() {
         _modules = null;
         FieldInfos = null;
+        NetModuleDiagnosticsUI = null;
     }
 
     internal static void Register(NetModule netModule) {

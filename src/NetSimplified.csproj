@@ -7,15 +7,15 @@
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.1.1</PackageVersion>
     <Title>Net Simplified</Title>
     <Authors>Cyrilly</Authors>
     <PackageLicenseUrl>https://github.com/Cyrillya/NetSimplified-tModLoader/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/Cyrillya/NetSimplified-tModLoader</RepositoryUrl>
     <RepositoryType>DLL Library</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
+    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <FileVersion>1.1.1</FileVersion>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
@@ -30,6 +30,9 @@
   <ItemGroup>
     <Reference Include="FNA">
       <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\Libraries\FNA\1.0.0\FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="ReLogic">
+      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\Libraries\ReLogic\1.0.0\ReLogic.dll</HintPath>
     </Reference>
     <Reference Include="tModLoader">
       <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\tModLoader.dll</HintPath>
