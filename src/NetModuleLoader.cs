@@ -28,6 +28,11 @@ public class NetModuleLoader : ModSystem
     }
 
     /// <inheritdoc />
+    public override void PreSaveAndQuit() {
+        NetModuleDiagnosticsUI.Reset();
+    }
+
+    /// <inheritdoc />
     public override void Load() {
         Mod.AddContent<AggregateModule>();
     }
