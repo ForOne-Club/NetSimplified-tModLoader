@@ -15,9 +15,9 @@ internal static class AutoSyncHandler
     /// 自动传输支持的数据类型
     /// </summary>
     public static readonly Type[] SupportedTypes = {
-        typeof(byte), typeof(bool), typeof(short), typeof(int), typeof(long), typeof(ushort), typeof(uint),
-        typeof(ulong), typeof(float), typeof(double), typeof(char), typeof(string), typeof(Vector2), typeof(Color),
-        typeof(Point), typeof(Point16), typeof(Item), typeof(Item[])
+        typeof(byte), typeof(bool), typeof(short), typeof(int), typeof(long), typeof(sbyte), typeof(ushort),
+        typeof(uint), typeof(ulong), typeof(float), typeof(double), typeof(char), typeof(string), typeof(Vector2),
+        typeof(Color), typeof(Point), typeof(Point16), typeof(Item), typeof(Item[])
     };
 
     internal static void HandleAutoSend(NetModule netModule, BinaryWriter bw) {
@@ -44,6 +44,10 @@ internal static class AutoSyncHandler
 
             if (fieldInfo.FieldType == typeof(long)) {
                 bw.Write((long) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(sbyte)) {
+                bw.Write((sbyte) fieldInfo.GetValue(netModule)!);
             }
 
             if (fieldInfo.FieldType == typeof(ushort)) {
@@ -145,6 +149,10 @@ internal static class AutoSyncHandler
 
             if (fieldInfo.FieldType == typeof(long)) {
                 fieldInfo.SetValue(netModule, r.ReadInt64());
+            }
+
+            if (fieldInfo.FieldType == typeof(sbyte)) {
+                fieldInfo.SetValue(netModule, r.ReadSByte());
             }
 
             if (fieldInfo.FieldType == typeof(ushort)) {
