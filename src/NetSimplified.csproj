@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>NetSimplified</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
@@ -18,24 +19,4 @@
     <FileVersion>1.1.2</FileVersion>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="NetSimplifiedExample\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="NetSimplifiedExample\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="NetSimplifiedExample\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="FNA">
-      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\Libraries\FNA\1.0.0\FNA.dll</HintPath>
-    </Reference>
-    <Reference Include="ReLogic">
-      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\Libraries\ReLogic\1.0.0\ReLogic.dll</HintPath>
-    </Reference>
-    <Reference Include="tModLoader">
-      <HintPath>D:\SteamLibrary\steamapps\common\tModLoader\tModLoader.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>
