@@ -17,7 +17,7 @@ internal static class AutoSyncHandler
     public static readonly Type[] SupportedTypes = {
         typeof(byte), typeof(bool), typeof(short), typeof(int), typeof(long), typeof(sbyte), typeof(ushort),
         typeof(uint), typeof(ulong), typeof(float), typeof(double), typeof(char), typeof(string), typeof(Vector2),
-        typeof(Color), typeof(Point), typeof(Point16), typeof(Item), typeof(Item[])
+        typeof(Color), typeof(Point), typeof(Point16), typeof(Item), typeof(Item[]), typeof(byte[])
     };
 
     internal static void HandleAutoSend(NetModule netModule, BinaryWriter bw) {
@@ -28,6 +28,12 @@ internal static class AutoSyncHandler
         foreach (var fieldInfo in fields) {
             if (fieldInfo.FieldType == typeof(byte)) {
                 bw.Write((byte) fieldInfo.GetValue(netModule)!);
+            }
+
+            if (fieldInfo.FieldType == typeof(byte[])) {
+                var buffer = (byte[]) fieldInfo.GetValue(netModule)!;
+                bw.Write(buffer.Length);
+                bw.Write(buffer);
             }
 
             if (fieldInfo.FieldType == typeof(bool)) {
@@ -133,6 +139,11 @@ internal static class AutoSyncHandler
         foreach (var fieldInfo in fields) {
             if (fieldInfo.FieldType == typeof(byte)) {
                 fieldInfo.SetValue(netModule, r.ReadByte());
+            }
+
+            if (fieldInfo.FieldType == typeof(byte[])) {
+                int length = r.ReadInt32();
+                fieldInfo.SetValue(netModule, r.ReadBytes(length));
             }
 
             if (fieldInfo.FieldType == typeof(bool)) {

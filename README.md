@@ -38,7 +38,7 @@
 
 此库提供了一个自动通过 `Write` 与 `Read` 系列方法传输数据的功能，可以通过对类或字段标记 `[AutoSync]` 特性以使其自动同步，[这个例子](NetSimplifiedExample/Packets/InventoryPacket.cs)可以展示了它的使用方法。
 
-目前，自动传输支持的变量为: ` byte, bool, short, int, long, sbyte, ushort, uint, ulong, float, double, char, string, Vector2, Color, Point, Point16, Item, Item[]`
+目前，自动传输支持的变量为: ` byte, byte[], bool, short, int, long, sbyte, ushort, uint, ulong, float, double, char, string, Vector2, Color, Point, Point16, Item, Item[]`
 
 **注意: 对于不支持的变量，无法使用自动传输，你仍需要自行编写传输代码**
 
