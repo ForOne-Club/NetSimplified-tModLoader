@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\tModLoader.targets" />
-  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>NetSimplified</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,18 +8,17 @@
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
-    <PackageVersion>1.1.2</PackageVersion>
+    <PackageVersion>1.1.3</PackageVersion>
     <Title>Net Simplified</Title>
     <Authors>Cyrilly</Authors>
     <PackageLicenseUrl>https://github.com/Cyrillya/NetSimplified-tModLoader/blob/master/LICENSE.txt</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/Cyrillya/NetSimplified-tModLoader</RepositoryUrl>
     <RepositoryType>DLL Library</RepositoryType>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <AssemblyVersion>1.1.2</AssemblyVersion>
-    <FileVersion>1.1.2</FileVersion>
+    <AssemblyVersion>1.1.3</AssemblyVersion>
+    <FileVersion>1.1.3</FileVersion>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
   </PropertyGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <Compile Remove="NetSimplifiedExample\**" />
   </ItemGroup>
@@ -30,6 +28,4 @@
   <ItemGroup>
     <None Remove="NetSimplifiedExample\**" />
   </ItemGroup>
-=======
->>>>>>> origin/master
 </Project>
