@@ -1,8 +1,15 @@
-# Net Simplified
-这是一个用于tModLoader联机代码的类库  
-不需要Mod强引用(因为根本没有Mod)
+<h1 align="center">Net Simplified</h1>
 
-[最新版本在这里](https://github.com/Crapsky233/NetSimplified-tModLoader/releases/latest)
+<div align="center">
+
+[最新版本](https://github.com/Crapsky233/NetSimplified-tModLoader/releases/latest)
+
+一个用于tModLoader联机代码的类库，不需要Mod强引用
+
+</div>
+
+## 编译
+如果你想编译这个库，请将源码clone到本地或下载zip并解压，然后将tModLoader Mod源码文件夹（即ModSources）下的 `tModLoader.targets` 文件复制并替换到该项目根目录
 
 ## 添加到你的Mod中
 在Mod根目录创建一个 `lib/` 文件夹，将 `dll` 与 `xml` 文件放入（在[Releases](https://github.com/Crapsky233/NetSimplified-tModLoader/releases/latest)界面下载最新版的这两个文件）  
@@ -82,6 +89,7 @@ public class ExamplePacket : NetModule {
 在这个例子中，只有 `_exampleByte` 会自动传输，而 `_exmapleItem` 则通过手动编写代码传输。这种方法可以使字段有选择性地自动传输，而在不同的情况下传输不同的变量，便于对数据包的特定操作。
 
 ***
+
 ## [NetModule 类](src/NetModule.cs)
 这是一个基本的网络传输类，用于控制 `ModPacket` 包的发送/接收  
 如果你要自定义发包，直接新建一个类并继承 `NetModule` 类即可（注意引用命名空间 `using NetSimplified`）
@@ -113,6 +121,7 @@ public class ExamplePacket : NetModule {
 发包可参考: [ExamplePacketSender](NetSimplifiedExample/Items/ExamplePacketSender.cs)
 
 ***
+
 ## [AggregateModule 类](src/AggregateModule.cs)
 以一个 `ModPacket` 包的形式发送多个 `NetModule` 包, 能有效避免分散性地多次发包
 
@@ -134,6 +143,7 @@ AggregateModule.Get(new List<NetModule> {
 ```
 
 ***
+
 ## 发包
 发包调用 `NetModule.Send` 即可，获取包实例看上面的  
 ### 传参
@@ -144,6 +154,8 @@ AggregateModule.Get(new List<NetModule> {
 若 `toClient` 和 `ignoreClient` 皆为 `-1` 时
 - 在服务器调用 `Send` -> 发给所有客户端
 - 在客户端调用 `Send` -> 发给服务器
+  
 ***
+
 ## 扩展方法
 直接看 [Extensions](src/Extensions.cs) 吧（摆烂

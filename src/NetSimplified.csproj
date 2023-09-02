@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\tModLoader.targets" />
+  <Import Project="..\tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>NetSimplified</AssemblyName>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,6 +20,7 @@
     <FileVersion>1.1.2</FileVersion>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
   </PropertyGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <Compile Remove="NetSimplifiedExample\**" />
   </ItemGroup>
@@ -28,4 +30,6 @@
   <ItemGroup>
     <None Remove="NetSimplifiedExample\**" />
   </ItemGroup>
+=======
+>>>>>>> origin/master
 </Project>
